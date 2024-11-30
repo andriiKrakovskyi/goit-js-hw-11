@@ -1,5 +1,4 @@
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
+import { showError } from './toast-helper.js';
 
 const API_CONFIG = {
   BASE_URL: 'https://pixabay.com/api/',
@@ -19,21 +18,10 @@ export function serviceWeather(query) {
 
   return fetch(`${BASE_URL}?${params}`).then(response => {
     if (!response.ok) {
-      iziToast.show({
-        message:
-          'Sorry, there are no images matching your search query. Please, try again!',
-        messageColor: '#FFF',
-        messageSize: '16px',
-        messageLineHeight: '24px',
-        backgroundColor: '#EF4040',
-        position: 'topRight',
-        iconUrl: '../img/iconalert.svg',
-        maxWidth: '350',
-        imageWidth: '24',
-        transitionIn: 'flipInX',
-      });
+      showError();
       throw new Error('Error fetching api');
     }
+
     return response.json();
   });
 }
